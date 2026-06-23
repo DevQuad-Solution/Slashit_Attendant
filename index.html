@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <link rel="manifest" href="/manifest.json" />
+    <meta name="theme-color" content="#2563eb" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="apple-mobile-web-app-title" content="SlashIt Hub" />
+    <link rel="icon" href="/logo.jpg" />
+    <link rel="apple-touch-icon" href="/logo.jpg" />
+    <title>SlashIt Attendant</title>
+    <style>
+      * { box-sizing: border-box; margin: 0; padding: 0; }
+      body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif; -webkit-font-smoothing: antialiased; -webkit-tap-highlight-color: transparent; overscroll-behavior: none; }
+      #root { min-height: 100dvh; }
+      .no-scrollbar::-webkit-scrollbar { display: none; }
+      .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+      #pwa-splash { position: fixed; inset: 0; z-index: 9999; background: linear-gradient(160deg,#1e3a8a,#2563eb); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 16px; transition: opacity 0.4s ease; }
+      #pwa-splash.hidden { opacity: 0; pointer-events: none; }
+      #pwa-splash img { width: 80px; height: 80px; border-radius: 20px; object-fit: contain; background: #fff; padding: 8px; }
+      #pwa-splash span { font-size: 24px; font-weight: 900; color: #fff; font-family: system-ui; }
+      #pwa-splash small { font-size: 12px; color: rgba(255,255,255,.7); }
+    </style>
+    <script>
+      // Unregister any cached service workers immediately (fixes blank page in dev)
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.getRegistrations().then(function(regs) {
+          regs.forEach(function(r) { r.unregister(); });
+        });
+      }
+    </script>
+  </head>
+  <body>
+    <div id="pwa-splash"><img src="/logo.jpg" alt="SlashIt"/><span>SlashIt</span><small>Attendant Portal</small></div>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+    <script>
+      window.addEventListener('load', () => {
+        setTimeout(() => {
+          const s = document.getElementById('pwa-splash');
+          if (s) { s.classList.add('hidden'); setTimeout(() => s.remove(), 400); }
+        }, 800);
+      });
+      if ('serviceWorker' in navigator) {
+        const isDev = location.hostname === 'localhost' || location.hostname === '127.0.0.1';
+        if (isDev) {
+          // Dev mode: unregister any old SW that may be caching/intercepting Vite modules
+          navigator.serviceWorker.getRegistrations().then(regs => {
+            regs.forEach(r => r.unregister());
+          });
+        } else {
+          // Production only: register SW for offline support
+          window.addEventListener('load', () => {
+            navigator.serviceWorker.register('/sw.js').then(reg => {
+              console.log('Attendant SW registered:', reg.scope);
+              reg.addEventListener('updatefound', () => {
+                const nw = reg.installing;
+                if (nw) nw.addEventListener('statechange', () => {
+                  if (nw.state === 'installed') nw.postMessage({ type: 'SKIP_WAITING' });
+                });
+              });
+            }).catch(e => console.log('SW failed:', e));
+          });
+        }
+      }
+      let deferredPrompt;
+      window.addEventListener('beforeinstallprompt', (e) => { e.preventDefault(); deferredPrompt = e; window.__pwaPrompt = e; });
+      window.addEventListener('appinstalled', () => { window.__pwaPrompt = null; });
+    </script>
+  </body>
+</html>
