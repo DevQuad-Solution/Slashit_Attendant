@@ -10,6 +10,7 @@ import { storage, chatStore, msgStore, notifStore, adminLog, adminChatLog,
          broadcastSlashMessage, attNotifStore } from '../../../storage';
 import { fmt, delay, fromNow } from '../../../data';
 import { Card } from '../../../components/ui';
+import { BottomNav } from '../../../components/layout/BottomNav';
 
 export function Dashboard() {
   const nav = useNavigate();
@@ -93,8 +94,8 @@ export function Dashboard() {
   ];
 
   return (
-    <div style={{background:'#f0f4ff',minHeight:'auto'}}>
-      <div style={{background:'linear-gradient(135deg,#1e3a8a,#2563eb)',padding:'24px 16px 24px',position:'relative',overflow:'hidden'}}>
+    <div style={{background:'#f0f4ff',minHeight:'100vh'}}>
+      <div style={{background:'linear-gradient(135deg,#1e3a8a,#2563eb)',padding:'52px 16px 24px',position:'relative',overflow:'hidden'}}>
         <div style={{position:'absolute',top:-40,right:-40,width:160,height:160,borderRadius:'50%',background:'rgba(255,255,255,.06)'}}/>
         <div style={{display:'flex',justifyContent:'space-between',alignItems:'flex-start',marginBottom:16}}>
           <div style={{display:'flex',gap:12,alignItems:'center'}}>
@@ -177,6 +178,7 @@ export function Dashboard() {
           Sign Out
         </button>
       </div>
+      <BottomNav/>
     </div>
   );
 }

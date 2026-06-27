@@ -10,6 +10,7 @@ import { storage, chatStore, msgStore, notifStore, adminLog, adminChatLog,
          broadcastSlashMessage, attNotifStore } from '../../../storage';
 import { fmt, delay, fromNow } from '../../../data';
 import { Card } from '../../../components/ui';
+import { BottomNav } from '../../../components/layout/BottomNav';
 
 export function Ratings() {
   const nav = useNavigate();
@@ -28,7 +29,7 @@ export function Ratings() {
   const avg = reviews.length ? (reviews.reduce((s,r)=>s+(r.rating||0),0)/reviews.length).toFixed(1) : att?.rating||'—';
   const stars = (n) => Array.from({length:5},(_,i)=><span key={i} style={{fontSize:14,filter:i<Math.round(Number(n))?'none':'grayscale(1) opacity(.3)'}}>⭐</span>);
   return (
-    <div style={{background:'#f0f4ff',minHeight:'auto'}}>
+    <div style={{background:'#f0f4ff',minHeight:'100vh'}}>
       <div style={{background:'linear-gradient(135deg,#1e3a8a,#2563eb)',padding:'52px 16px 20px'}}>
         <button onClick={()=>nav(-1)} style={{color:'rgba(255,255,255,.8)',background:'none',fontSize:22,marginBottom:8}}>←</button>
         <div style={{fontSize:20,fontWeight:900,color:'#fff'}}>Hub Ratings</div>
@@ -77,6 +78,7 @@ export function Ratings() {
           </div>
         )}
       </div>
+      <BottomNav/>
     </div>
   );
 }

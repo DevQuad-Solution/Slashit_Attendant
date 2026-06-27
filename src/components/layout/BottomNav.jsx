@@ -32,6 +32,7 @@ export function BottomNav() {
   ];
   return (
     <>
+      <div style={{ height: 72 }} />
       <nav style={{ position: 'fixed', bottom: 0, left: '50%', transform: 'translateX(-50%)', width: '100%', maxWidth: 430, background: '#fff', borderTop: '1.5px solid #e2e8f0', display: 'flex', alignItems: 'center', padding: '8px 0 12px', zIndex: 40, boxShadow: '0 -4px 20px rgba(0,0,0,.08)' }}>
         {tabs.map(t => {
           const active = loc.pathname === t.path;

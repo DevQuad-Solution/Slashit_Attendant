@@ -9,6 +9,7 @@ import { toast } from '../../../toast';
 import { storage, chatStore, msgStore, notifStore, adminLog, adminChatLog,
          broadcastSlashMessage, attNotifStore } from '../../../storage';
 import { fmt, delay, fromNow } from '../../../data';
+import { BottomNav } from '../../../components/layout/BottomNav';
 
 export function AttendantNotifications() {
   const nav = useNavigate();
@@ -25,7 +26,7 @@ export function AttendantNotifications() {
   const typeBg={user_message:'#eff6ff',chat_sent:'#f0fdf4',pickup_ready:'#fef3c7',completed:'#fdf4ff',dissolved:'#fff7ed',new_delivery:'#fefce8'};
   const typeBdr={user_message:'#bfdbfe',chat_sent:'#bbf7d0',pickup_ready:'#fde68a',completed:'#e9d5ff',dissolved:'#fed7aa',new_delivery:'#fef08a'};
   return (
-    <div style={{background:'#f0f4ff',minHeight:'auto'}}>
+    <div style={{background:'#f0f4ff',minHeight:'100vh'}}>
       <div style={{background:'linear-gradient(135deg,#1e3a8a,#2563eb)',padding:'52px 16px 20px'}}>
         <div style={{display:'flex',justifyContent:'space-between',alignItems:'flex-start'}}>
           <div>
@@ -57,6 +58,7 @@ export function AttendantNotifications() {
           </div>
         ))}
       </div>
+      <BottomNav/>
     </div>
   );
 }

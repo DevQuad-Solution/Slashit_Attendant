@@ -10,6 +10,7 @@ import { storage, chatStore, msgStore, notifStore, adminLog, adminChatLog,
          broadcastSlashMessage, attNotifStore } from '../../../storage';
 import { fmt, delay, fromNow } from '../../../data';
 import { Btn, Card } from '../../../components/ui';
+import { BottomNav } from '../../../components/layout/BottomNav';
 
 export function Collections() {
   const nav = useNavigate();
@@ -75,7 +76,7 @@ export function Collections() {
   };
 
   return (
-    <div style={{background:'#f0f4ff',minHeight:'auto'}}>
+    <div style={{background:'#f0f4ff',minHeight:'100vh'}}>
       <div style={{background:'linear-gradient(135deg,#1e3a8a,#2563eb)',padding:'52px 16px 20px'}}>
         <button onClick={()=>nav(-1)} style={{color:'rgba(255,255,255,.8)',background:'none',fontSize:22,marginBottom:8}}>←</button>
         <div style={{fontSize:20,fontWeight:900,color:'#fff'}}>Collections</div>
@@ -126,6 +127,7 @@ export function Collections() {
         })}
         {collections.length===0&&<div style={{textAlign:'center',padding:48,color:'#94a3b8'}}><div style={{fontSize:40,marginBottom:12}}>✅</div><div style={{fontWeight:600}}>No active collections</div><div style={{fontSize:12,marginTop:6,color:'#94a3b8'}}>Collections appear here when slashes fill up</div></div>}
       </div>
+      <BottomNav/>
     </div>
   );
 }

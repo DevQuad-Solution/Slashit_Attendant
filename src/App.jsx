@@ -23,8 +23,7 @@ import { AttendantSidebar } from './components/layout/AttendantSidebar';
 // ── CSS ───────────────────────────────────────────────────────────────────────
 const CSS = `
   *{margin:0;padding:0;box-sizing:border-box}
-  html,body{height:100%;overflow:hidden}
-  body{background:#f0f4ff;color:#1e293b;font-family:'Inter',system-ui,sans-serif;font-size:14px;margin:0}
+  body{background:#f0f4ff;color:#1e293b;font-family:'Inter',system-ui,sans-serif;font-size:14px;margin:0;min-height:100vh}
   input,textarea,select{background:#f8fafc;border:1.5px solid #e2e8f0;border-radius:10px;padding:10px 14px;color:#1e293b;font-size:14px;width:100%;outline:none;transition:border-color .2s;font-family:inherit}
   input:focus,textarea:focus,select:focus{border-color:#2563eb;background:#fff}
   button{cursor:pointer;border:none;outline:none;transition:all .15s;font-family:inherit}
@@ -40,18 +39,17 @@ const CSS = `
   .pulse{animation:pulse 2s infinite}
   /* ── Desktop sidebar ── */
   @media(min-width:900px){
-    .att-layout{display:flex;height:100vh;overflow:hidden}
+    .att-layout{display:flex;min-height:100vh}
     .att-sidebar{width:220px;flex-shrink:0;background:#fff;border-right:1.5px solid #e2e8f0;position:fixed;top:0;left:0;height:100vh;display:flex;flex-direction:column;z-index:40;transition:width .25s;overflow:hidden}
     .att-sidebar.collapsed{width:64px}
-    .att-main{margin-left:220px;flex:1;min-width:0;transition:margin-left .25s;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch}
-    .att-sidebar.collapsed+.att-main{margin-left:64px}
+    .att-main{margin-left:220px;flex:1;min-width:0;transition:margin-left .25s}
+    .att-sidebar.collapsed ~ .att-main, .att-main.collapsed{margin-left:64px}
     .att-bottom-nav{display:none!important}
     .att-spacer{display:none!important}
   }
   @media(max-width:899px){
-    .att-layout{display:block;height:100vh;overflow:hidden}
     .att-sidebar{display:none!important}
-    .att-main{margin-left:0!important;width:100%;height:100vh;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;padding-bottom:72px}
+    .att-main{margin-left:0!important;max-width:100%}
     .att-bottom-nav{display:flex!important}
   }
 `;
@@ -235,14 +233,15 @@ function Login() {
 function Protected({ children }) {
   if (!storage.load('session', null)) return <Navigate to="/" replace />;
   return (
-    <div className="att-layout">
+    <>
       {/* Desktop sidebar — CSS hides on mobile */}
       <AttendantSidebar />
-      {/* Main content area — scrolls independently */}
+      {/* Main content — CSS adds margin-left on desktop */}
       <div className="att-main">
+        <BottomNav />
         {children}
       </div>
-    </div>
+    </>
   );
 }
 

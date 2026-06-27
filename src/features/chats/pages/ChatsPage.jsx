@@ -10,6 +10,7 @@ import { storage, chatStore, msgStore, notifStore, adminLog, adminChatLog,
          broadcastSlashMessage, attNotifStore } from '../../../storage';
 import { fmt, delay, fromNow } from '../../../data';
 import { Card } from '../../../components/ui';
+import { BottomNav } from '../../../components/layout/BottomNav';
 
 export function Chats() {
   const nav = useNavigate();
@@ -94,7 +95,7 @@ export function Chats() {
   const totalUnread = conversations.reduce((s,c)=>s+c.unread,0);
 
   return (
-    <div style={{background:'#f0f4ff',minHeight:'auto'}}>
+    <div style={{background:'#f0f4ff',minHeight:'100vh'}}>
       <div style={{background:'linear-gradient(135deg,#1e3a8a,#2563eb)',padding:'52px 16px 20px'}}>
         {activeUserId ? (
           <div style={{display:'flex',alignItems:'center',gap:12}}>
@@ -155,6 +156,7 @@ export function Chats() {
           </div>
         </div>
       )}
+      {!activeUserId&&<BottomNav/>}
     </div>
   );
 }
