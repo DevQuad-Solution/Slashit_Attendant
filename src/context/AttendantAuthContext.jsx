@@ -1,12 +1,17 @@
-import { createContext, useContext, useState, useCallback } from 'react';
-import { setAuthToken, clearAuthToken } from '../lib/axios';
+import { createContext, useContext, useState, useCallback } from "react";
+import { setAuthToken, clearAuthToken } from "../lib/axios";
+import Cookies from "js-cookie";
 
 const AttendantAuthContext = createContext(null);
-const SESSION_KEY = 'slashit_attendant_session';
+const SESSION_KEY = "slashit_attendant_session";
 
 export function AttendantAuthProvider({ children }) {
   const [attendant, setAttendant] = useState(() => {
-    try { return JSON.parse(localStorage.getItem(SESSION_KEY) || 'null'); } catch { return null; }
+    try {
+      return JSON.parse(Cookies.get(SESSION_KEY) || "null");
+    } catch {
+      return null;
+    }
   });
 
   // signin response: data: { attendant: { _id, name, email, phone, role }, accessToken }
@@ -15,12 +20,14 @@ export function AttendantAuthProvider({ children }) {
     setAuthToken(accessToken);
     const session = { ...backendAttendant, id: backendAttendant._id };
     setAttendant(session);
-    try { localStorage.setItem(SESSION_KEY, JSON.stringify(session)); } catch {}
+    try {
+      Cookies.set(SESSION_KEY, JSON.stringify(session));
+    } catch {}
   }, []);
 
   const logout = useCallback(() => {
     clearAuthToken();
-    localStorage.removeItem(SESSION_KEY);
+    Cookies.remove(SESSION_KEY);
     setAttendant(null);
   }, []);
 
@@ -33,6 +40,7 @@ export function AttendantAuthProvider({ children }) {
 
 export const useAttendantAuth = () => {
   const ctx = useContext(AttendantAuthContext);
-  if (!ctx) throw new Error('useAttendantAuth must be inside AttendantAuthProvider');
+  if (!ctx)
+    throw new Error("useAttendantAuth must be inside AttendantAuthProvider");
   return ctx;
 };
