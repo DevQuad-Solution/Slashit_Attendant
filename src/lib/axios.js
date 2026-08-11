@@ -2,7 +2,7 @@ import axios from "axios";
 import Cookies from "js-cookie";
 
 export const serverUrl =
-  import.meta.env.VITE_NODE_ENV === "production"
+  import.meta.env.VITE_NODE_ENV != "development"
     ? "https://slashit-g2og.onrender.com"
     : "http://10.243.194.253:5004";
 
