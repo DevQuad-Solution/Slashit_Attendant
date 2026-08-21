@@ -58,7 +58,7 @@ export function AttendantNotifications() {
           </div>
         ))}
       </div>
-      <BottomNav/>
+      {/* <BottomNav/> */}
     </div>
   );
 }

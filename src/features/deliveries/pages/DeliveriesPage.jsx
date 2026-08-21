@@ -764,7 +764,7 @@ export function Deliveries() {
             historyDeliveries.map((d) => renderCard(d, true))
           ))}
       </div>
-      <BottomNav />
+      {/* <BottomNav /> */}
     </div>
   );
 }

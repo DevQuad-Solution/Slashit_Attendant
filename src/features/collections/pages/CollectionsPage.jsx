@@ -364,7 +364,7 @@ export function Collections() {
           </div>
         )}
       </div>
-      <BottomNav />
+      {/* <BottomNav /> */}
     </div>
   );
 }

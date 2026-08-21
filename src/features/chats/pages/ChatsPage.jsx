@@ -454,7 +454,7 @@ export function Chats() {
           </div>
         </div>
       )}
-      {!activeUserId && <BottomNav />}
+      {/* {!activeUserId && <BottomNav />} */}
     </div>
   );
 }

@@ -140,7 +140,7 @@ export function Scanner() {
           </Card>
         )}
       </div>
-      <BottomNav/>
+      {/* <BottomNav/> */}
     </div>
   );
 }

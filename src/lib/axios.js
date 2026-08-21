@@ -4,7 +4,7 @@ import Cookies from "js-cookie";
 export const serverUrl =
   import.meta.env.VITE_NODE_ENV != "development"
     ? "https://slashit-g2og.onrender.com"
-    : "http://10.243.194.253:5004";
+    : "http://10.203.14.253:5004";
 
 export const apiUrl = `${serverUrl}/api`;
 export const TOKEN_KEY = "slashit_attendant_token";
